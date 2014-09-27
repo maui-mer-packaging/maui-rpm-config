@@ -53,27 +53,27 @@ done | sort -u
 
 #
 # --- Perl modules.
-[ -x /usr/lib/rpm/meego/perl.prov ] &&
-    echo $filelist | tr '[:blank:]' \\n | grep '\.pm$' | /usr/lib/rpm/meego/perl.prov | sort -u
+[ -x /usr/lib/rpm/maui/perl.prov ] &&
+    echo $filelist | tr '[:blank:]' \\n | grep '\.pm$' | /usr/lib/rpm/maui/perl.prov | sort -u
 
 #
 # --- Python modules.
-[ -x /usr/lib/rpm/meego/python.prov -a -n "$pythonlist" ] &&
-    echo $pythonlist | tr '[:blank:]' \\n | /usr/lib/rpm/meego/python.prov | sort -u
+[ -x /usr/lib/rpm/maui/python.prov -a -n "$pythonlist" ] &&
+    echo $pythonlist | tr '[:blank:]' \\n | /usr/lib/rpm/maui/python.prov | sort -u
 
 #
 # --- Tcl modules.
-[ -x /usr/lib/rpm/meego/tcl.prov -a -n "$tcllist" ] &&
-    echo $tcllist | tr '[:blank:]' \\n | /usr/lib/rpm/meego/tcl.prov | sort -u
+[ -x /usr/lib/rpm/maui/tcl.prov -a -n "$tcllist" ] &&
+    echo $tcllist | tr '[:blank:]' \\n | /usr/lib/rpm/maui/tcl.prov | sort -u
 
 #
 # --- libtool
-[ -x /usr/lib/rpm/meego/find-provides.libtool ] &&
-    echo $filelist | tr '[:blank:]' \\n | /usr/lib/rpm/meego/find-provides.libtool | sort -u
+[ -x /usr/lib/rpm/maui/find-provides.libtool ] &&
+    echo $filelist | tr '[:blank:]' \\n | /usr/lib/rpm/maui/find-provides.libtool | sort -u
 
 #
 # --- any other extra find-provides scripts
-for i in /usr/lib/rpm/meego/find-provides.d/*.prov
+for i in /usr/lib/rpm/maui/find-provides.d/*.prov
 do
     [ -x $i ] &&
         (echo $filelist | tr '[:blank:]' \\n | $i | sort -u)
@@ -81,14 +81,14 @@ done
 
 #
 # --- debuginfo files
-[ -x /usr/lib/rpm/meego/find-provides.debuginfo -a -n "$debuginfolist" ] &&
-     printf "%s\n" "${debuginfolist[@]}" | /usr/lib/rpm/meego/find-provides.debuginfo | sort -u
+[ -x /usr/lib/rpm/maui/find-provides.debuginfo -a -n "$debuginfolist" ] &&
+     printf "%s\n" "${debuginfolist[@]}" | /usr/lib/rpm/maui/find-provides.debuginfo | sort -u
 
 
 #
 # --- pkgconfig
-[ -x /usr/lib/rpm/meego/find-provides.pkgconfig ] &&
-    echo $filelist | tr '[:blank:]' \\n | /usr/lib/rpm/meego/find-provides.pkgconfig | sort -u
+[ -x /usr/lib/rpm/maui/find-provides.pkgconfig ] &&
+    echo $filelist | tr '[:blank:]' \\n | /usr/lib/rpm/maui/find-provides.pkgconfig | sort -u
 
 #
 # --- Kernel module imported symbols
@@ -113,7 +113,7 @@ then
     unset is_kmod
 fi
 
-[ -x /usr/lib/rpm/meego/find-provides.ksyms ] && [ "$is_kmod" ] &&
-    printf "%s\n" "${filelist[@]}" | /usr/lib/rpm/meego/find-provides.ksyms
+[ -x /usr/lib/rpm/maui/find-provides.ksyms ] && [ "$is_kmod" ] &&
+    printf "%s\n" "${filelist[@]}" | /usr/lib/rpm/maui/find-provides.ksyms
 
 exit 0

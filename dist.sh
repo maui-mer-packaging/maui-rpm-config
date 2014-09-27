@@ -11,7 +11,7 @@
 # If we successfully detect the version number, we output the
 # dist tag. Otherwise, we exit with no output.
 
-RELEASEFILE=/etc/meego-release
+RELEASEFILE=/etc/maui-release
 
 function check_num {
     MAINVER=`cut -d "(" -f 1 < $RELEASEFILE | \
@@ -21,27 +21,27 @@ function check_num {
 }
 
 
-function check_meego {
-    grep -q MeeGo $RELEASEFILE && echo $DISTNUM
+function check_maui {
+    grep -q Maui $RELEASEFILE && echo $DISTNUM
 }
 
 DISTNUM=`check_num`
-DISTMOB=`check_meego`
+DISTMOB=`check_maui`
 if [ -n "$DISTNUM" ]; then
     if [ -n "$DISTMOB" ]; then
-	DISTTYPE=meego
+	DISTTYPE=maui
     fi
 fi
 [ -n "$DISTTYPE" -a -n "$DISTNUM" ] && DISTTAG=".${DISTTYPE}${DISTNUM}"
 
 case "$1" in
-    --meego) echo -n "$DISTMOB" ;;
+    --maui) echo -n "$DISTMOB" ;;
     --distnum) echo -n "$DISTNUM" ;;
     --disttype) echo -n "$DISTTYPE" ;;
     --help)
 	printf "Usage: $0 [OPTIONS]\n"
 	printf " Default mode is --dist. Possible options:\n"
-	printf " --meego\t\tfor MeeGo version\n"
+	printf " --maui\t\tfor Maui version\n"
 	printf " --dist\t\tfor distribution tag\n"
 	printf " --distnum\tfor distribution number (major)\n"
 	printf " --disttype\tfor distribution type\n" ;;

@@ -837,9 +837,9 @@ EOF
 	if echo __ARM_EABI__ | $CC_FOR_BUILD -E - 2>/dev/null \
 		| grep __ARM_EABI__ >/dev/null
 	then
-		echo ${UNAME_MACHINE}-meego-linux-gnu
+		echo ${UNAME_MACHINE}-maui-linux-gnu
 	else
-		echo ${UNAME_MACHINE}-meego-linux-gnueabi
+		echo ${UNAME_MACHINE}-maui-linux-gnueabi
 	fi
 	exit ;;
     avr32*:Linux:*:*)

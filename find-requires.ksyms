@@ -25,7 +25,7 @@ fi
 modules=($(grep -E '/lib/modules/.+\.ko$'))
 if [ ${#modules[@]} -gt 0 ]; then
     symset_table=$(mktemp -t ${0##*/}.XXXXX)
-    /usr/lib/rpm/meego/symset-table | sort > $symset_table
+    /usr/lib/rpm/maui/symset-table | sort > $symset_table
 
     join -t $'\t' -j 1 -a 2 $symset_table <(
         # Filter out requirements that we fulfill ourself.

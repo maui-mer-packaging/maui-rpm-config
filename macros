@@ -3,7 +3,7 @@
 #==============================================================================
 # ---- per-platform macros.
 #
-%_vendor		meego
+%_vendor		maui
 %_os			linux
 %_target_platform	%{_target_cpu}-%{_vendor}-%{_target_os}%{?_gnu}
 
@@ -163,17 +163,17 @@
 %__arch_install_post   /usr/lib/rpm/check-buildroot
 
 %__os_install_post    \
-    /usr/lib/rpm/meego/brp-compress \
-    %{!?__debug_package:/usr/lib/rpm/meego/brp-strip %{__strip}} \
-    /usr/lib/rpm/meego/brp-strip-static-archive %{__strip} \
-    /usr/lib/rpm/meego/brp-strip-comment-note %{__strip} %{__objdump} \
+    /usr/lib/rpm/maui/brp-compress \
+    %{!?__debug_package:/usr/lib/rpm/maui/brp-strip %{__strip}} \
+    /usr/lib/rpm/maui/brp-strip-static-archive %{__strip} \
+    /usr/lib/rpm/maui/brp-strip-comment-note %{__strip} %{__objdump} \
     /usr/lib/rpm/brp-python-bytecompile \
-    /usr/lib/rpm/meego/brp-python-hardlink \
-    %{!?disable_docs_package:/usr/lib/rpm/meego/find-docs.sh %{buildroot}} \
-    %{!?__jar_repack:/usr/lib/rpm/meego/brp-java-repack-jars} \
+    /usr/lib/rpm/maui/brp-python-hardlink \
+    %{!?disable_docs_package:/usr/lib/rpm/maui/find-docs.sh %{buildroot}} \
+    %{!?__jar_repack:/usr/lib/rpm/maui/brp-java-repack-jars} \
 %{nil}
 
-#    /usr/lib/rpm/meego/brp-implant-ident-static
+#    /usr/lib/rpm/maui/brp-implant-ident-static
 
 %__spec_install_post\
     %{?__debug_package:%{__debug_install_post}}\
@@ -268,11 +268,11 @@ posix.setenv("RPMBUILD_SOURCEDIR",rpm.expand("%?_sourcedir"));
 # Note: Used iff _use_internal_dependency_generator is zero.
 #%__find_provides       %{_rpmconfigdir}/rpmdeps --provides
 #%__find_requires       %{_rpmconfigdir}/rpmdeps --requires
-#%__find_provides        %{__set_helper_env}%{_rpmconfigdir}/meego/find-provides %name
-#%__find_requires        %{__set_helper_env}%{_rpmconfigdir}/meego/find-requires %name
+#%__find_provides        %{__set_helper_env}%{_rpmconfigdir}/maui/find-provides %name
+#%__find_requires        %{__set_helper_env}%{_rpmconfigdir}/maui/find-requires %name
 
-%__find_provides        /usr/lib/rpm/meego/find-provides
-%__find_requires        /usr/lib/rpm/meego/find-requires
+%__find_provides        /usr/lib/rpm/maui/find-provides
+%__find_requires        /usr/lib/rpm/maui/find-requires
 
 %__global_cflags	-O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector --param=ssp-buffer-size=4 -Wformat -Wformat-security
 
@@ -416,11 +416,11 @@ posix.setenv("RPMBUILD_SOURCEDIR",rpm.expand("%?_sourcedir"));
 
 
 #
-# MeeGo icons
+# Maui icons
 #
 # %1	the name of the icon (typically the name of the package). RedHat
 #	requires 3 icons sizes (48, 32, 16), all should be present.
-%meego_icons() \
+%maui_icons() \
 install -D -m 644 %1-48.png $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/48x48/apps/%{name}.png\
 install -D -m 644 %1-32.png $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/32x32/apps/%{name}.png\
 install -D -m 644 %1-16.png $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/16x16/apps/%{name}.png\

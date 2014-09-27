@@ -48,7 +48,7 @@ if [ "$needed" -eq 0 ]; then
     lib64=`if file -L $f 2>/dev/null | \
 	grep "ELF 64-bit" >/dev/null; then echo "$mark64"; fi`
     ldd $f | awk '/=>/ {
-	if ($1 !~ /libNoVersion.so/ && $1 !~ /4[um]lib.so/ && $1 !~ /libmeego-kernel.so/) {
+	if ($1 !~ /libNoVersion.so/ && $1 !~ /4[um]lib.so/ && $1 !~ /libmaui-kernel.so/) {
 	    gsub(/'\''"/,"\\&",$1);
 	    printf "%s'$lib64'\n", $1
 	}
@@ -62,7 +62,7 @@ if [ "$needed" -eq 0 ]; then
     lib64=`if file -L $f 2>/dev/null | \
 	grep "ELF 64-bit" >/dev/null; then echo "$mark64"; fi`
     ldd $f | awk '/=>/ {
-	if ($1 !~ /libNoVersion.so/ && $1 !~ /4[um]lib.so/ && $1 !~ /libmeego-kernel.so/) {
+	if ($1 !~ /libNoVersion.so/ && $1 !~ /4[um]lib.so/ && $1 !~ /libmaui-kernel.so/) {
 	    gsub(/'\''"/,"\\&",$1);
 	    printf "%s'$lib64'\n", $1
 	}
@@ -120,18 +120,18 @@ done | sort -u
 
 #
 # --- Perl modules.
-[ -x /usr/lib/rpm/meego/perl.req -a -n "$perllist" ] && \
-    echo $perllist | tr '[:blank:]' \\n | /usr/lib/rpm/meego/perl.req | sort -u
+[ -x /usr/lib/rpm/maui/perl.req -a -n "$perllist" ] && \
+    echo $perllist | tr '[:blank:]' \\n | /usr/lib/rpm/maui/perl.req | sort -u
 
 #
 # --- Python modules.
-[ -x /usr/lib/rpm/meego/python.req -a -n "$pythonlist" ] && \
-    echo $pythonlist | tr '[:blank:]' \\n | /usr/lib/rpm/meego/python.req | sort -u
+[ -x /usr/lib/rpm/maui/python.req -a -n "$pythonlist" ] && \
+    echo $pythonlist | tr '[:blank:]' \\n | /usr/lib/rpm/maui/python.req | sort -u
 
 #
 # --- Tcl modules.
-[ -x /usr/lib/rpm/meego/tcl.req -a -n "$tcllist" ] && \
-    echo $tcllist | tr '[:blank:]' \\n | /usr/lib/rpm/meego/tcl.req | sort -u
+[ -x /usr/lib/rpm/maui/tcl.req -a -n "$tcllist" ] && \
+    echo $tcllist | tr '[:blank:]' \\n | /usr/lib/rpm/maui/tcl.req | sort -u
 
 #
 # --- Kernel module imported symbols
@@ -154,7 +154,7 @@ for f in $filelist; do
 done
 
 # Disabling for now while the Fedora kernel doesn't produce kABI deps.
-#[ -x /usr/lib/rpm/meego/find-requires.ksyms ] && [ "$is_kmod" ] &&
-#    printf "%s\n" "${filelist[@]}" | /usr/lib/rpm/meego/find-requires.ksyms
+#[ -x /usr/lib/rpm/maui/find-requires.ksyms ] && [ "$is_kmod" ] &&
+#    printf "%s\n" "${filelist[@]}" | /usr/lib/rpm/maui/find-requires.ksyms
 
 exit 0

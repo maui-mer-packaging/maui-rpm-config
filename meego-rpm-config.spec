@@ -5,16 +5,16 @@
 # >> macros
 # << macros
 
-Name:       meego-rpm-config
+Name:       maui-rpm-config
 Summary:    MeeGo specific rpm configuration files
 Version:    0.3
 Release:    1
 Group:      Development/System
 License:    GPL+
 BuildArch:  noarch
-URL:        http://meego.com
-Source0:    meego-rpm-config-%{version}.tar.bz2
-Source100:  meego-rpm-config.yaml
+URL:        http://maui.com
+Source0:    maui-rpm-config-%{version}.tar.bz2
+Source100:  maui-rpm-config.yaml
 Provides:   moblin-rpm-config
 Obsoletes:   moblin-rpm-config =< 2.1.92-3.8
 
@@ -56,7 +56,7 @@ make DESTDIR=${RPM_BUILD_ROOT} install
 %files
 %defattr(-,root,root,-)
 # >> files
-%{_prefix}/lib/rpm/meego
+%{_prefix}/lib/rpm/maui
 # << files
 
 
