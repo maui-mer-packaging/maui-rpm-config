@@ -142,6 +142,13 @@
 #==============================================================================
 # ---- Build policy macros.
 #
+
+%__spec_install_pre %{___build_pre}\
+    [ "$RPM_BUILD_ROOT" != "/" ] && rm -rf "${RPM_BUILD_ROOT}"\
+    mkdir -p `dirname "$RPM_BUILD_ROOT"`\
+    mkdir "$RPM_BUILD_ROOT"\
+%{nil}
+
 #---------------------------------------------------------------------
 #	Expanded at end of %install scriptlet.
 #
@@ -247,8 +254,6 @@ LD_AS_NEEDED=1; export LD_AS_NEEDED ; \
 LANG=C\
 export LANG\
 unset DISPLAY\
-rm -rf %{?buildroot:%{buildroot}} \
-mkdir -p %{?buildroot:%{buildroot}} \
 %{nil}
 
 %check %%check\
