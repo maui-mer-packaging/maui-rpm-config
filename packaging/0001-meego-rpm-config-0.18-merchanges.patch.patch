@@ -1,0 +1,21 @@
+From: Pier Luigi Fiorini <pierluigi.fiorini@gmail.com>
+Date: Sat, 27 Sep 2014 08:47:44 +0200
+Subject: meego-rpm-config-0.18-merchanges.patch
+
+---
+ rpmrc | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/rpmrc b/rpmrc
+index 7a893d5..774ad12 100644
+--- a/rpmrc
++++ b/rpmrc
+@@ -47,7 +47,7 @@ optflags: armv4tl %{__global_cflags} -march=armv4t
+ optflags: armv5tejl %{__global_cflags} -march=armv5te
+ Optflags: armv5tel %{__global_cflags}   -fmessage-length=0 -march=armv5te -mlittle-endian
+ Optflags: armv6l %{__global_cflags}  -fmessage-length=0 -march=armv6 -mlittle-endian  -mfpu=vfp -mfloat-abi=softfp -D__SOFTFP__
+-Optflags: armv7l %{__global_cflags}  -fmessage-length=0 -march=armv7-a -mtune=cortex-a8 -mlittle-endian  -mfpu=vfpv3 -mfloat-abi=softfp -D__SOFTFP__
++Optflags: armv7l %{__global_cflags}  -fmessage-length=0 -march=armv7-a -mlittle-endian -mfpu=vfpv3-d16 -mfloat-abi=softfp -D__SOFTFP__
+ optflags: armv7hl %{__global_cflags} -fmessage-length=0 -march=armv7-a -mfloat-abi=hard -mfpu=vfpv3-d16 -mno-thumb
+ optflags: armv7nhl %{__global_cflags} -fmessage-length=0 -march=armv7-a -mfloat-abi=hard -mfpu=neon -mno-thumb  
+ optflags: armv7thl %{__global_cflags}  -fmessage-length=0 -march=armv7-a -mfloat-abi=hard -mfpu=vfpv3-d16 -mthumb

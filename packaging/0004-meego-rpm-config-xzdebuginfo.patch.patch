@@ -1,0 +1,64 @@
+From: Pier Luigi Fiorini <pierluigi.fiorini@gmail.com>
+Date: Sat, 27 Sep 2014 08:47:44 +0200
+Subject: meego-rpm-config-xzdebuginfo.patch
+
+---
+ macros | 38 +++++++-------------------------------
+ 1 file changed, 7 insertions(+), 31 deletions(-)
+
+diff --git a/macros b/macros
+index b4fc209..fc951bf 100644
+--- a/macros
++++ b/macros
+@@ -23,6 +23,13 @@
+ #       Default fuzz level for %patch in spec file.
+ %_default_patch_fuzz    2
+ 
++%_source_filedigest_algorithm 8
++%_binary_filedigest_algorithm 8
++
++# Use XZ compression for binary payloads
++%_binary_payload w6.xzdio
++
++
+ #==============================================================================
+ # ---- configure and makeinstall.
+ #
+@@ -175,37 +182,6 @@
+ %{nil}
+ 
+ 
+-#	Template for debug information sub-package.
+-# NOTE: This is a copy from rpm to get the ifnarch noarch fix, it can be removed later
+-%debug_package \
+-%ifnarch noarch\
+-%global __debug_package 1\
+-%package debuginfo \
+-Summary: Debug information for package %{name}\
+-Group: Development/Debug\
+-AutoReqProv: 0\
+-%description debuginfo\
+-This package provides debug information for package %{name}.\
+-Debug information is useful when developing applications that use this\
+-package or when debugging this package.\
+-%files debuginfo -f debugfiles.list\
+-%defattr(-,root,root,-)\
+-\
+-%package debugsource\
+-Summary: Debug sources for package %{name}\
+-Group: Development/Debug\
+-AutoReqProv: 0\
+-Requires: %{name}-debuginfo = %{version}-%{release}\
+-%description debugsource\
+-This package provides debug sources for package %{name}.\
+-Debug sources are useful when developing applications that use this\
+-package or when debugging this package.\
+-%files debugsource -f debugsources.list\
+-%defattr(-,root,root,-)\
+-%endif\
+-%{nil}
+-
+-
+ %lang_package \
+ %package locale \
+ Summary: Translations and Locale for package %{name}\

@@ -1,0 +1,364 @@
+From: Pier Luigi Fiorini <pierluigi.fiorini@gmail.com>
+Date: Sat, 27 Sep 2014 08:49:17 +0200
+Subject: Rename to maui
+
+---
+ Makefile              | 12 ++++++------
+ config.guess          |  4 ++--
+ dist.sh               | 14 +++++++-------
+ find-provides         | 30 +++++++++++++++---------------
+ find-requires         | 20 ++++++++++----------
+ find-requires.ksyms   |  2 +-
+ macros                | 30 +++++++++++++++---------------
+ meego-rpm-config.spec | 10 +++++-----
+ rpmrc                 |  2 +-
+ 9 files changed, 62 insertions(+), 62 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index ac49aed..80a1ef7 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1,4 +1,4 @@
+-NAME=meego-rpm-config
++NAME=maui-rpm-config
+ VERSION = $(shell cat VERSION)
+ TAGVER = $(shell cat VERSION | sed -e "s/\([0-9\.]*\).*/\1/")
+ 
+@@ -14,16 +14,16 @@ clean:
+ 	rm -f *~ 
+ 
+ install:
+-	mkdir -p $(DESTDIR)/usr/lib/rpm/meego
+-	cp -pr * $(DESTDIR)/usr/lib/rpm/meego/
+-	rm -f $(DESTDIR)/usr/lib/rpm/meego/Makefile
+-	rm -f $(DESTDIR)/usr/lib/rpm/meego/meego-rpm-config.spec
++	mkdir -p $(DESTDIR)/usr/lib/rpm/maui
++	cp -pr * $(DESTDIR)/usr/lib/rpm/maui/
++	rm -f $(DESTDIR)/usr/lib/rpm/maui/Makefile
++	rm -f $(DESTDIR)/usr/lib/rpm/maui/maui-rpm-config.spec
+ 
+ tag-archive:
+ 	git tag -a $(VERSION)
+ 
+ create-archive:
+-	git archive --format=tar --prefix=meego-rpm-config-$(VERSION)/ HEAD | bzip2 -9v > meego-rpm-config-$(VERSION).tar.bz2
++	git archive --format=tar --prefix=maui-rpm-config-$(VERSION)/ HEAD | bzip2 -9v > maui-rpm-config-$(VERSION).tar.bz2
+ 	@echo "The final archive is in $(NAME)-$(VERSION).tar.bz2"
+ 
+ archive: tag-archive create-archive
+diff --git a/config.guess b/config.guess
+index ba5314b..82bedbc 100755
+--- a/config.guess
++++ b/config.guess
+@@ -837,9 +837,9 @@ EOF
+ 	if echo __ARM_EABI__ | $CC_FOR_BUILD -E - 2>/dev/null \
+ 		| grep __ARM_EABI__ >/dev/null
+ 	then
+-		echo ${UNAME_MACHINE}-meego-linux-gnu
++		echo ${UNAME_MACHINE}-maui-linux-gnu
+ 	else
+-		echo ${UNAME_MACHINE}-meego-linux-gnueabi
++		echo ${UNAME_MACHINE}-maui-linux-gnueabi
+ 	fi
+ 	exit ;;
+     avr32*:Linux:*:*)
+diff --git a/dist.sh b/dist.sh
+index 00c95b9..4d479d8 100755
+--- a/dist.sh
++++ b/dist.sh
+@@ -11,7 +11,7 @@
+ # If we successfully detect the version number, we output the
+ # dist tag. Otherwise, we exit with no output.
+ 
+-RELEASEFILE=/etc/meego-release
++RELEASEFILE=/etc/maui-release
+ 
+ function check_num {
+     MAINVER=`cut -d "(" -f 1 < $RELEASEFILE | \
+@@ -21,27 +21,27 @@ function check_num {
+ }
+ 
+ 
+-function check_meego {
+-    grep -q MeeGo $RELEASEFILE && echo $DISTNUM
++function check_maui {
++    grep -q Maui $RELEASEFILE && echo $DISTNUM
+ }
+ 
+ DISTNUM=`check_num`
+-DISTMOB=`check_meego`
++DISTMOB=`check_maui`
+ if [ -n "$DISTNUM" ]; then
+     if [ -n "$DISTMOB" ]; then
+-	DISTTYPE=meego
++	DISTTYPE=maui
+     fi
+ fi
+ [ -n "$DISTTYPE" -a -n "$DISTNUM" ] && DISTTAG=".${DISTTYPE}${DISTNUM}"
+ 
+ case "$1" in
+-    --meego) echo -n "$DISTMOB" ;;
++    --maui) echo -n "$DISTMOB" ;;
+     --distnum) echo -n "$DISTNUM" ;;
+     --disttype) echo -n "$DISTTYPE" ;;
+     --help)
+ 	printf "Usage: $0 [OPTIONS]\n"
+ 	printf " Default mode is --dist. Possible options:\n"
+-	printf " --meego\t\tfor MeeGo version\n"
++	printf " --maui\t\tfor Maui version\n"
+ 	printf " --dist\t\tfor distribution tag\n"
+ 	printf " --distnum\tfor distribution number (major)\n"
+ 	printf " --disttype\tfor distribution type\n" ;;
+diff --git a/find-provides b/find-provides
+index 7ef1951..6213848 100755
+--- a/find-provides
++++ b/find-provides
+@@ -53,27 +53,27 @@ done | sort -u
+ 
+ #
+ # --- Perl modules.
+-[ -x /usr/lib/rpm/meego/perl.prov ] &&
+-    echo $filelist | tr '[:blank:]' \\n | grep '\.pm$' | /usr/lib/rpm/meego/perl.prov | sort -u
++[ -x /usr/lib/rpm/maui/perl.prov ] &&
++    echo $filelist | tr '[:blank:]' \\n | grep '\.pm$' | /usr/lib/rpm/maui/perl.prov | sort -u
+ 
+ #
+ # --- Python modules.
+-[ -x /usr/lib/rpm/meego/python.prov -a -n "$pythonlist" ] &&
+-    echo $pythonlist | tr '[:blank:]' \\n | /usr/lib/rpm/meego/python.prov | sort -u
++[ -x /usr/lib/rpm/maui/python.prov -a -n "$pythonlist" ] &&
++    echo $pythonlist | tr '[:blank:]' \\n | /usr/lib/rpm/maui/python.prov | sort -u
+ 
+ #
+ # --- Tcl modules.
+-[ -x /usr/lib/rpm/meego/tcl.prov -a -n "$tcllist" ] &&
+-    echo $tcllist | tr '[:blank:]' \\n | /usr/lib/rpm/meego/tcl.prov | sort -u
++[ -x /usr/lib/rpm/maui/tcl.prov -a -n "$tcllist" ] &&
++    echo $tcllist | tr '[:blank:]' \\n | /usr/lib/rpm/maui/tcl.prov | sort -u
+ 
+ #
+ # --- libtool
+-[ -x /usr/lib/rpm/meego/find-provides.libtool ] &&
+-    echo $filelist | tr '[:blank:]' \\n | /usr/lib/rpm/meego/find-provides.libtool | sort -u
++[ -x /usr/lib/rpm/maui/find-provides.libtool ] &&
++    echo $filelist | tr '[:blank:]' \\n | /usr/lib/rpm/maui/find-provides.libtool | sort -u
+ 
+ #
+ # --- any other extra find-provides scripts
+-for i in /usr/lib/rpm/meego/find-provides.d/*.prov
++for i in /usr/lib/rpm/maui/find-provides.d/*.prov
+ do
+     [ -x $i ] &&
+         (echo $filelist | tr '[:blank:]' \\n | $i | sort -u)
+@@ -81,14 +81,14 @@ done
+ 
+ #
+ # --- debuginfo files
+-[ -x /usr/lib/rpm/meego/find-provides.debuginfo -a -n "$debuginfolist" ] &&
+-     printf "%s\n" "${debuginfolist[@]}" | /usr/lib/rpm/meego/find-provides.debuginfo | sort -u
++[ -x /usr/lib/rpm/maui/find-provides.debuginfo -a -n "$debuginfolist" ] &&
++     printf "%s\n" "${debuginfolist[@]}" | /usr/lib/rpm/maui/find-provides.debuginfo | sort -u
+ 
+ 
+ #
+ # --- pkgconfig
+-[ -x /usr/lib/rpm/meego/find-provides.pkgconfig ] &&
+-    echo $filelist | tr '[:blank:]' \\n | /usr/lib/rpm/meego/find-provides.pkgconfig | sort -u
++[ -x /usr/lib/rpm/maui/find-provides.pkgconfig ] &&
++    echo $filelist | tr '[:blank:]' \\n | /usr/lib/rpm/maui/find-provides.pkgconfig | sort -u
+ 
+ #
+ # --- Kernel module imported symbols
+@@ -113,7 +113,7 @@ then
+     unset is_kmod
+ fi
+ 
+-[ -x /usr/lib/rpm/meego/find-provides.ksyms ] && [ "$is_kmod" ] &&
+-    printf "%s\n" "${filelist[@]}" | /usr/lib/rpm/meego/find-provides.ksyms
++[ -x /usr/lib/rpm/maui/find-provides.ksyms ] && [ "$is_kmod" ] &&
++    printf "%s\n" "${filelist[@]}" | /usr/lib/rpm/maui/find-provides.ksyms
+ 
+ exit 0
+diff --git a/find-requires b/find-requires
+index b1ac01b..d61a620 100755
+--- a/find-requires
++++ b/find-requires
+@@ -48,7 +48,7 @@ if [ "$needed" -eq 0 ]; then
+     lib64=`if file -L $f 2>/dev/null | \
+ 	grep "ELF 64-bit" >/dev/null; then echo "$mark64"; fi`
+     ldd $f | awk '/=>/ {
+-	if ($1 !~ /libNoVersion.so/ && $1 !~ /4[um]lib.so/ && $1 !~ /libmeego-kernel.so/) {
++	if ($1 !~ /libNoVersion.so/ && $1 !~ /4[um]lib.so/ && $1 !~ /libmaui-kernel.so/) {
+ 	    gsub(/'\''"/,"\\&",$1);
+ 	    printf "%s'$lib64'\n", $1
+ 	}
+@@ -62,7 +62,7 @@ if [ "$needed" -eq 0 ]; then
+     lib64=`if file -L $f 2>/dev/null | \
+ 	grep "ELF 64-bit" >/dev/null; then echo "$mark64"; fi`
+     ldd $f | awk '/=>/ {
+-	if ($1 !~ /libNoVersion.so/ && $1 !~ /4[um]lib.so/ && $1 !~ /libmeego-kernel.so/) {
++	if ($1 !~ /libNoVersion.so/ && $1 !~ /4[um]lib.so/ && $1 !~ /libmaui-kernel.so/) {
+ 	    gsub(/'\''"/,"\\&",$1);
+ 	    printf "%s'$lib64'\n", $1
+ 	}
+@@ -120,18 +120,18 @@ done | sort -u
+ 
+ #
+ # --- Perl modules.
+-[ -x /usr/lib/rpm/meego/perl.req -a -n "$perllist" ] && \
+-    echo $perllist | tr '[:blank:]' \\n | /usr/lib/rpm/meego/perl.req | sort -u
++[ -x /usr/lib/rpm/maui/perl.req -a -n "$perllist" ] && \
++    echo $perllist | tr '[:blank:]' \\n | /usr/lib/rpm/maui/perl.req | sort -u
+ 
+ #
+ # --- Python modules.
+-[ -x /usr/lib/rpm/meego/python.req -a -n "$pythonlist" ] && \
+-    echo $pythonlist | tr '[:blank:]' \\n | /usr/lib/rpm/meego/python.req | sort -u
++[ -x /usr/lib/rpm/maui/python.req -a -n "$pythonlist" ] && \
++    echo $pythonlist | tr '[:blank:]' \\n | /usr/lib/rpm/maui/python.req | sort -u
+ 
+ #
+ # --- Tcl modules.
+-[ -x /usr/lib/rpm/meego/tcl.req -a -n "$tcllist" ] && \
+-    echo $tcllist | tr '[:blank:]' \\n | /usr/lib/rpm/meego/tcl.req | sort -u
++[ -x /usr/lib/rpm/maui/tcl.req -a -n "$tcllist" ] && \
++    echo $tcllist | tr '[:blank:]' \\n | /usr/lib/rpm/maui/tcl.req | sort -u
+ 
+ #
+ # --- Kernel module imported symbols
+@@ -154,7 +154,7 @@ for f in $filelist; do
+ done
+ 
+ # Disabling for now while the Fedora kernel doesn't produce kABI deps.
+-#[ -x /usr/lib/rpm/meego/find-requires.ksyms ] && [ "$is_kmod" ] &&
+-#    printf "%s\n" "${filelist[@]}" | /usr/lib/rpm/meego/find-requires.ksyms
++#[ -x /usr/lib/rpm/maui/find-requires.ksyms ] && [ "$is_kmod" ] &&
++#    printf "%s\n" "${filelist[@]}" | /usr/lib/rpm/maui/find-requires.ksyms
+ 
+ exit 0
+diff --git a/find-requires.ksyms b/find-requires.ksyms
+index e733a22..dc4fc66 100755
+--- a/find-requires.ksyms
++++ b/find-requires.ksyms
+@@ -25,7 +25,7 @@ fi
+ modules=($(grep -E '/lib/modules/.+\.ko$'))
+ if [ ${#modules[@]} -gt 0 ]; then
+     symset_table=$(mktemp -t ${0##*/}.XXXXX)
+-    /usr/lib/rpm/meego/symset-table | sort > $symset_table
++    /usr/lib/rpm/maui/symset-table | sort > $symset_table
+ 
+     join -t $'\t' -j 1 -a 2 $symset_table <(
+         # Filter out requirements that we fulfill ourself.
+diff --git a/macros b/macros
+index fc951bf..1151fb8 100644
+--- a/macros
++++ b/macros
+@@ -3,7 +3,7 @@
+ #==============================================================================
+ # ---- per-platform macros.
+ #
+-%_vendor		meego
++%_vendor		maui
+ %_os			linux
+ %_target_platform	%{_target_cpu}-%{_vendor}-%{_target_os}%{?_gnu}
+ 
+@@ -163,17 +163,17 @@
+ %__arch_install_post   /usr/lib/rpm/check-buildroot
+ 
+ %__os_install_post    \
+-    /usr/lib/rpm/meego/brp-compress \
+-    %{!?__debug_package:/usr/lib/rpm/meego/brp-strip %{__strip}} \
+-    /usr/lib/rpm/meego/brp-strip-static-archive %{__strip} \
+-    /usr/lib/rpm/meego/brp-strip-comment-note %{__strip} %{__objdump} \
++    /usr/lib/rpm/maui/brp-compress \
++    %{!?__debug_package:/usr/lib/rpm/maui/brp-strip %{__strip}} \
++    /usr/lib/rpm/maui/brp-strip-static-archive %{__strip} \
++    /usr/lib/rpm/maui/brp-strip-comment-note %{__strip} %{__objdump} \
+     /usr/lib/rpm/brp-python-bytecompile \
+-    /usr/lib/rpm/meego/brp-python-hardlink \
+-    %{!?disable_docs_package:/usr/lib/rpm/meego/find-docs.sh %{buildroot}} \
+-    %{!?__jar_repack:/usr/lib/rpm/meego/brp-java-repack-jars} \
++    /usr/lib/rpm/maui/brp-python-hardlink \
++    %{!?disable_docs_package:/usr/lib/rpm/maui/find-docs.sh %{buildroot}} \
++    %{!?__jar_repack:/usr/lib/rpm/maui/brp-java-repack-jars} \
+ %{nil}
+ 
+-#    /usr/lib/rpm/meego/brp-implant-ident-static
++#    /usr/lib/rpm/maui/brp-implant-ident-static
+ 
+ %__spec_install_post\
+     %{?__debug_package:%{__debug_install_post}}\
+@@ -268,11 +268,11 @@ posix.setenv("RPMBUILD_SOURCEDIR",rpm.expand("%?_sourcedir"));
+ # Note: Used iff _use_internal_dependency_generator is zero.
+ #%__find_provides       %{_rpmconfigdir}/rpmdeps --provides
+ #%__find_requires       %{_rpmconfigdir}/rpmdeps --requires
+-#%__find_provides        %{__set_helper_env}%{_rpmconfigdir}/meego/find-provides %name
+-#%__find_requires        %{__set_helper_env}%{_rpmconfigdir}/meego/find-requires %name
++#%__find_provides        %{__set_helper_env}%{_rpmconfigdir}/maui/find-provides %name
++#%__find_requires        %{__set_helper_env}%{_rpmconfigdir}/maui/find-requires %name
+ 
+-%__find_provides        /usr/lib/rpm/meego/find-provides
+-%__find_requires        /usr/lib/rpm/meego/find-requires
++%__find_provides        /usr/lib/rpm/maui/find-provides
++%__find_requires        /usr/lib/rpm/maui/find-requires
+ 
+ %__global_cflags	-O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector --param=ssp-buffer-size=4 -Wformat -Wformat-security
+ 
+@@ -416,11 +416,11 @@ posix.setenv("RPMBUILD_SOURCEDIR",rpm.expand("%?_sourcedir"));
+ 
+ 
+ #
+-# MeeGo icons
++# Maui icons
+ #
+ # %1	the name of the icon (typically the name of the package). RedHat
+ #	requires 3 icons sizes (48, 32, 16), all should be present.
+-%meego_icons() \
++%maui_icons() \
+ install -D -m 644 %1-48.png $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/48x48/apps/%{name}.png\
+ install -D -m 644 %1-32.png $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/32x32/apps/%{name}.png\
+ install -D -m 644 %1-16.png $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/16x16/apps/%{name}.png\
+diff --git a/meego-rpm-config.spec b/meego-rpm-config.spec
+index 0aad11a..2c9a2bd 100644
+--- a/meego-rpm-config.spec
++++ b/meego-rpm-config.spec
+@@ -5,16 +5,16 @@
+ # >> macros
+ # << macros
+ 
+-Name:       meego-rpm-config
++Name:       maui-rpm-config
+ Summary:    MeeGo specific rpm configuration files
+ Version:    0.3
+ Release:    1
+ Group:      Development/System
+ License:    GPL+
+ BuildArch:  noarch
+-URL:        http://meego.com
+-Source0:    meego-rpm-config-%{version}.tar.bz2
+-Source100:  meego-rpm-config.yaml
++URL:        http://maui.com
++Source0:    maui-rpm-config-%{version}.tar.bz2
++Source100:  maui-rpm-config.yaml
+ Provides:   moblin-rpm-config
+ Obsoletes:   moblin-rpm-config =< 2.1.92-3.8
+ 
+@@ -56,7 +56,7 @@ make DESTDIR=${RPM_BUILD_ROOT} install
+ %files
+ %defattr(-,root,root,-)
+ # >> files
+-%{_prefix}/lib/rpm/meego
++%{_prefix}/lib/rpm/maui
+ # << files
+ 
+ 
+diff --git a/rpmrc b/rpmrc
+index 39cf18d..a02210a 100644
+--- a/rpmrc
++++ b/rpmrc
+@@ -79,4 +79,4 @@ buildarchtranslate: armv5tejl: armv5tel
+ buildarchtranslate: armv6l: armv5tel
+ 
+ 
+-macrofiles:     /usr/lib/rpm/macros:/usr/lib/rpm/%{_target}/macros:/usr/lib/rpm/meego/macros:/etc/rpm/macros.*:/etc/rpm/macros:/etc/rpm/%{_target}/macros:~/.rpmmacros
++macrofiles:     /usr/lib/rpm/macros:/usr/lib/rpm/%{_target}/macros:/usr/lib/rpm/maui/macros:/etc/rpm/macros.*:/etc/rpm/macros:/etc/rpm/%{_target}/macros:~/.rpmmacros

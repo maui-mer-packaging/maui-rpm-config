@@ -1,0 +1,39 @@
+From: Pier Luigi Fiorini <pierluigi.fiorini@gmail.com>
+Date: Sat, 27 Sep 2014 08:47:44 +0200
+Subject: meego-rpm-config-0.18-bashism.patch
+
+---
+ macros | 14 ++++++--------
+ 1 file changed, 6 insertions(+), 8 deletions(-)
+
+diff --git a/macros b/macros
+index 89a28cb..016c2f3 100644
+--- a/macros
++++ b/macros
+@@ -124,20 +124,18 @@
+ 
+ 
+ %install_info(:-:) \
+-        ALL_ARGS=(%{**}) \
+-        NUM_ARGS=${#ALL_ARGS[@]} \
++        lastarg() { shift $(($# - 1)) ; echo "$1" ; } \
+         if test -x sbin/install-info ; then \
+-            if test -e "${ALL_ARGS[$((NUM_ARGS-1))]}" ; then \
+-                sbin/install-info "${ALL_ARGS[@]}" \
++            if test -e "$(lastarg %{**})" ; then \
++                sbin/install-info %{**} \
+             fi \
+         fi ;
+ 
+ %install_info_delete(:-:) \
+-        ALL_ARGS=(%{**}) \
+-        NUM_ARGS=${#ALL_ARGS[@]} \
++        lastarg() { shift $(($# - 1)) ; echo "$1" ; } \
+         if test -x sbin/install-info ; then \
+-           if ! test -e "${ALL_ARGS[$((NUM_ARGS-1))]}" ; then \
+-                sbin/install-info --quiet --delete "${ALL_ARGS[@]}" \
++           if ! test -e "$(lastarg %{**})" ; then \
++                sbin/install-info --quiet --delete %{**} \
+            fi ; \
+         fi ;
+ 

@@ -1,0 +1,35 @@
+From: Pier Luigi Fiorini <pierluigi.fiorini@gmail.com>
+Date: Sat, 27 Sep 2014 08:47:44 +0200
+Subject: meego-rpm-config-0.18-flexible-install.patch
+
+---
+ macros | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
+
+diff --git a/macros b/macros
+index 016c2f3..b4fc209 100644
+--- a/macros
++++ b/macros
+@@ -142,6 +142,13 @@
+ #==============================================================================
+ # ---- Build policy macros.
+ #
++
++%__spec_install_pre %{___build_pre}\
++    [ "$RPM_BUILD_ROOT" != "/" ] && rm -rf "${RPM_BUILD_ROOT}"\
++    mkdir -p `dirname "$RPM_BUILD_ROOT"`\
++    mkdir "$RPM_BUILD_ROOT"\
++%{nil}
++
+ #---------------------------------------------------------------------
+ #	Expanded at end of %install scriptlet.
+ #
+@@ -247,8 +254,6 @@ LD_AS_NEEDED=1; export LD_AS_NEEDED ; \
+ LANG=C\
+ export LANG\
+ unset DISPLAY\
+-rm -rf %{?buildroot:%{buildroot}} \
+-mkdir -p %{?buildroot:%{buildroot}} \
+ %{nil}
+ 
+ %check %%check\
