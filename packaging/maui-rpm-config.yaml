@@ -1,0 +1,15 @@
+Name: maui-rpm-config
+Summary: Maui specific rpm configuration files
+Version: 0.18
+Release: 1
+Group: Development/System
+License: GPL+
+URL: http://www.maui-project.org
+Sources:
+    - "%{name}-%{version}.tar.xz"
+Macros:
+    - disable_docs_package;1
+Description: Maui specific rpm configuration files.
+BuildArch: noarch
+Builder: none
+Configure: none

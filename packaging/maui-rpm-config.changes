@@ -1,0 +1,72 @@
+* Thu Nov 14 2013 Davide Bettio <davide.bettio@ispirata.com> - 0.18
+- Replace -mno-thumb with -marm to fix build on newer gcc versions
+
+* Tue May 21 2013 Juha Kallioinen <juha.kallioinen@jollamobile.com> - 0.18
+- Fixes MER#641: Add -Wno-psabi to ARM default optflags
+  This suppresses a spammy warning about changed va_list mangling in gcc 4.4
+
+* Sun Mar 03 2013 Carsten Munk <carsten.munk@jollamobile.com> - 0.18
+- Switch to SHA256 digests and XZ-6 compression, drop debug info package, it's in rpm just fine
+
+* Tue Jan 22 2013 Oleg Girko <ol+mer@infoserver.ru> - 0.18
+- Cleaning buildroot more correctly, in %__spec_install_pre, not %build.
+
+* Tue Dec 11 2012 Marko Saukko <marko.saukko@jollamobie.com> - 0.18
+- Drop the moblin-rpm-configs obsolete/provides
+- Clean packaging a bit.
+
+* Wed Aug 08 2012 Tuukka Tolvanen <tuukka.tolvanen@gmail.com> - 0.18
+- Patch against bashisms in install_info*, fix for MER#42 et al.
+
+* Fri May 27 2011 Anas Nashif <anas.nashif@intel.com> - 0.17
+- Refined doc/locale macros
+
+* Sun May 22 2011 Anas Nashif <anas.nashif@intel.com> - 0.15
+- Fix some issues with doc/lang macros
+
+* Sat May 21 2011 Anas Nashif <anas.nashif@intel.com> - 0.14
+- Update to 0.14
+
+* Thu May 19 2011 Anas Nashif <anas.nashif@intel.com> - 0.9
+- Support debugsource packages (bmc #12724)
+- Add macros for translations and doc sub packages (wip)
+
+* Mon Jan 24 2011 Zhang Qiang <qiang.z.zhang@intel.com> - 0.9
+- Adding armv7hl + armv7nhl + armv7thl + armv7tnhl in rpmrc
+  fix BMC#12456
+
+* Thu Jan 06 2011 Anas Nashif <anas.nashif@intel.com> - 0.9
+- Change _vendor macro from MeeGo to meego (bmc #11930)
+
+* Mon Sep 20 2010 Anas Nashif <nashif@linux.intel.com> - 0.8
+- sync compile flags with project config
+- -fno-omit-frame-pointer (bmc #6856)
+- Real fix for bmc #6967 (remove -Wl,-z,relro,-z,now)
+
+* Thu Jul 08 2010 Austin Zhang <austin.zhang@intel.com> - 0.7
+- Add global flags for security 
+
+* Wed Jun 30 2010 Anas Nashif <anas.nashif@intel.com> - 0.7
+- Add variable INSTALL_ROOT to macro %make_install
+- Release 0.7
+
+* Sat May 01 2010 Anas Nashif <anas.nashif@intel.com> - 0.6
+- bmc#1114: Remove kernel module and unused macros, those are 
+  fedora specifc and do not work on meego
+
+* Wed Apr 07 2010 Anas Nashif <anas.nashif@intel.com> - 0.4
+- Do not use hardcoded paths in macros (BMC#507)
+
+* Fri Mar 26 2010 Arjan van de Ven <arjan@linux.intel.com> - 0.2
+- fix the perl req script to deal with an epoch-less perl
+
+* Tue Mar 09 2010 Austin Zhang <austin.zhang@intel.com> - 0.2
+- ARM enabling
+
+* Sat Mar 06 2010 Anas Nashif <anas.nashif@intel.com> - 0.2
+- More tweaks to as we move from /usr/lib/rpm/redhat
+
+* Thu Mar 04 2010 Anas Nashif <anas.nashif@intel.com> - 0.1
+- Initial Release
+- Install in /usr/lib/rpm/meego
+
